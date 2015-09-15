@@ -9,6 +9,7 @@ var TARGET = process.env.npm_lifecycle_event;
 
 //webpack requires absolute paths
 var SRC_PATH = path.join(__dirname, 'src');
+var SERVER_PATH = path.join(__dirname, 'server');
 
 var common = {
   context: SRC_PATH,
@@ -17,7 +18,7 @@ var common = {
   // you must add a resolve.extensions parameter specifying files webpack
   // searches for; can use require('file') instead of require('file.jsx')
   resolve: {
-    root: SRC_PATH,
+    root: [SRC_PATH, SERVER_PATH],
     extensions: ['', '.js', '.jsx']
   },
   output: {
@@ -59,12 +60,17 @@ var common = {
 };
 
 if (TARGET === 'start' || !TARGET) {
-  // webpack dev server automatically refreshes content inthe browser
+  // webpack dev server automatically refreshes content in the browser
   module.exports = merge(common, {
+    entry: [
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      path.join(SRC_PATH, 'index.jsx')
+    ],
     eslint: {
       configFile: '.eslintrc'
     },
-    devtool: 'eval',
+    devtool: 'inline-source-map',
     devServer: {
       colors: true,
       historyApiFallback: true,
