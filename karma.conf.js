@@ -1,6 +1,5 @@
 var webpackConfig = require(__dirname + '/webpack.config');
-
-var webpack = require('webpack');
+webpackConfig.devtool = 'inline-source-map'; // override the devtool value to get sourcemap
 
 module.exports = function (config) {
   config.set({
@@ -16,14 +15,9 @@ module.exports = function (config) {
     },
     reporters: [ 'nyan' ], //report results in this format
     singleRun: true, //just run once by default
-    webpack: { //kind of a copy of your webpack config
-      devtool: 'inline-source-map', //just do inline source maps instead of the default
-      module: {
-        loaders: [
-          { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' }
-        ]
-      },
-      watch: true
+    webpack: {
+      resolve: webpackConfig.resolve,
+      module: webpackConfig.module
     },
     webpackServer: {
       noInfo: true //please don't spam the console when running in karma!
