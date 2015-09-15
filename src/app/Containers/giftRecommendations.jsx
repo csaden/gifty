@@ -13,14 +13,34 @@ var GiftRecommendations = React.createClass({
 
   mixins: [ Navigation ],
 
+  render: function() {
+    var books = this.filterGifts('books');
+    var concerts = this.filterGifts('concert');
+    // var etsyProducts = this.filterGifts('etsy');
+    // console.log(etsyProducts);
+    // <EtsyList products={etsyProducts} />
+
+    return (
+      <div className="recommendations">
+        <NavBar />
+        <FriendHeader friend={this.props.friend.friend}
+          url={this.props.friend.image_url}
+          navToWishList={this.navToWishList} />
+        <BookList amazonBooks={books} />
+        <ConcertList concerts={concerts} />
+
+      </div>
+    );
+  },
+
   navToWishList: function(friendId) {
     this.transitionTo(`/friends/${friendId}/wishList`);
   },
 
-  filterGifts: function(category){
-    var result = [];
-    result = this.props.gifts.filter(function(gift) { return gift.category === category; });
-    return result;
+  filterGifts: function(category) {
+    return this.props.gifts.filter(function(gift) {
+      return gift.category === category;
+    });
   },
 
   getInitialState: function() {
@@ -31,17 +51,17 @@ var GiftRecommendations = React.createClass({
 
     this.props.dispatch(initGifts());
     var friendId = this.props.params.friendId;
-    utils.fetchFriendById(friendId, function(friend){
+    utils.fetchFriendById(friendId, function(friend) {
       this.props.dispatch(fetchFriend(friend));
 
-      utils.getUserData("books", friend, function(userData){
-        utils.generateRandomKeyword(userData, function(keyWord){
+      utils.getUserData('books', friend, function(userData) {
+        utils.generateRandomKeyword(userData, function(keyWord) {
             if(keyWord){
 
-              utils.fetchGiftByKeyWord(keyWord, function(books){
+              utils.fetchGiftByKeyWord(keyWord, function(books) {
                 this.props.dispatch(saveGifts(books));
               }.bind(this));
-            }else{
+            } else {
               this.props.dispatch(saveGifts(null));
             }
           }.bind(this));
@@ -68,7 +88,7 @@ var GiftRecommendations = React.createClass({
       });
 
       var range = 365;
-      utils.getConcerts(userLocation,userBirthday,range,bandArr, function(concerts){
+      utils.getConcerts(userLocation, userBirthday, range, bandArr, function(concerts) {
         this.props.dispatch(saveGifts(concerts));
       }.bind(this));
     }.bind(this));
@@ -115,9 +135,9 @@ var GiftRecommendations = React.createClass({
 
 var mapStateToProps = function(state) {
   return {
-    friend : state.friend, // export the portion of the state from index.js Reducers
-    gifts : state.gifts,
-    image_url : state.image_url
+    friend: state.friend, // export the portion of the state from index.js Reducers
+    gifts: state.gifts,
+    image_url: state.image_url
   }
 };
 
