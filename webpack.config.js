@@ -29,3 +29,33 @@ module.exports = {
     }]
   }
 };
+
+// if (TARGET === 'start' || !TARGET) {
+//   // webpack dev server automatically refreshes content inthe browser
+//   module.exports = merge(common, {
+//     eslint: {
+//       configFile: '.eslintrc'
+//     },
+//     devtool: 'eval',
+//     devServer: {
+//       colors: true,
+//       historyApiFallback: true,
+//       hot: true,
+//       inline: true,
+//       progress: true,
+//       debug: true,
+//       port: 3000
+//     },
+//     plugins: [
+//       new webpack.optimize.CommonsChunkPlugin('common.js'),
+//       new HtmlWebpackPlugin({
+//         inject: true, // injects script tag for js at end of body
+//         template: 'src/index.html'
+//       }),
+//       new webpack.NoErrorsPlugin(), // if you want to see ESLint warnings in
+//       // console during development using WebpackDevServer,
+//       // remove NoErrorsPlugin from webpack config
+//       new webpack.HotModuleReplacementPlugin()
+//     ]
+//   });
+// }
