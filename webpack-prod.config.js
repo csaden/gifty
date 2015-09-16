@@ -1,5 +1,4 @@
 var commonConfig = require('./webpack-common.config.js');
-var HtmlWebpackPlugin = require('html-webpack-plugin')
 var webpack = require('webpack');
 
 var prodLoaders = [

@@ -6,7 +6,7 @@ import { Router, Route, Redirect } from 'react-router';
 import configStore from './app/Store/configStore';
 
 // containers
-import App from './app/Containers/app';
+import App from './app/Containers/app.jsx';
 import Login from './app/Containers/login';
 import FriendManager from './app/Containers/friendManager';
 import GiftDetail from './app/Containers/giftDetail';
