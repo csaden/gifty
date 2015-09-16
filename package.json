@@ -81,6 +81,6 @@
     "deploy": "NODE_ENV=production webpack -p",
     "dev-server": "nodemon server/server.js --watch server",
     "dev-web": "webpack-dev-server --config ./webpack-dev.config.js --hot --progress --colors --content-base build",
-    "build": "rm build/*; webpack --config ./webpack-prod.config.js --progress --colors",
+    "build": "rm build/*; webpack --config ./webpack-prod.config.js --progress --colors"
   }
 }
