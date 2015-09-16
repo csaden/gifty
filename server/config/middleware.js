@@ -1,12 +1,16 @@
-var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var cookieSession = require('cookie-session');
-var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var morgan = require('morgan');
+var path = require('path');
+var webpack = require('webpack');
 
+var static_path = path.join(__dirname, './../../build');
+console.log(static_path);
 
 module.exports = function(app, express) {
+
+  app.enable('trust proxy');
+
   // define routers
   var userRouter = express.Router();
   var giftRouter = express.Router();
@@ -19,12 +23,10 @@ module.exports = function(app, express) {
   app.use(bodyParser.urlencoded({ extended: true, limit:'50mb' }));
   app.use(morgan('dev'));
   app.use(bodyParser.json({limit: '50mb'}));
-  app.use(cookieParser());
-  app.use(cookieSession({secret: process.env.SESSION_SECRET}));
   app.use(cors());
 
-  // We point to our static assets
-  app.use(express.static(__dirname + '/../../src'));
+  var isProduction = process.env.NODE_ENV === 'production';
+  var port = isProduction ? process.env.PORT : 3000;
 
   // define API paths
   app.use('/api/users', userRouter);

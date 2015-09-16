@@ -24,7 +24,7 @@ var NavBar = React.createClass({
     var icon = (
       <span className="brand-icon">
         <a onClick={this.navToFriendList.bind(this)}>
-          <img className="brand-icon" src="/src/client/img/gyftee-icon.png" alt="gift box with ribbon" />
+          <img className="brand-icon" src="/img/gyftee-icon.png" alt="gift box with ribbon" />
           <span>Gyftee</span>
         </a>
       </span>

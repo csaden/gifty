@@ -2,6 +2,7 @@
   "name": "gyftee",
   "version": "1.0.0",
   "homepage": "https://github.com/agate-rain/gifty",
+  "main": "server/server.js",
   "authors": [
     "Ben Biran <benbiran@gmail.com>",
     "Jennie Kim Eldon <thejenniekim@gmail.com>",
@@ -75,13 +76,15 @@
     "webpack-merge": "^0.2.0"
   },
   "scripts": {
+    "postinstall": "webpack --config ./webpack-prod.config.js --progress --colors",
     "lint": "eslint src",
     "test": "npm run test-node",
-    "test-node": "mocha -R spec ./test/spec/**/*Spec.js",
-    "start": "webpack-dev-server & npm run server",
+    "test-node": "mocha -R spec ./test/spec/userModelSpec.js",
     "server": "nodemon server/server.js",
     "deploy": "NODE_ENV=production webpack -p",
-    "build": "webpack --progress --colors",
-    "watch": "webpack-dev-server --hot --inline --progress --colors"
+    "dev-server": "nodemon server/server.js --watch server",
+    "dev-web": "webpack-dev-server --config ./webpack-dev.config.js --hot --progress --colors --content-base build",
+    "dev": "nodemon server/server.js --watch server & webpack-dev-server --config ./webpack-dev.config.js --hot --progress --colors --content-base build",
+    "build": "rm build/*; webpack --config ./webpack-prod.config.js --progress --colors",
   }
 }

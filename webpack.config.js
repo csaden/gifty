@@ -1,92 +1,78 @@
-'use strict';
+// 'use strict';
 
-var webpack = require('webpack'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  merge = require('webpack-merge'),
-  path = require('path');
+// var webpack = require('webpack');
+// var path = require('path');
 
-var TARGET = process.env.npm_lifecycle_event;
+// //webpack requires absolute paths
+// var srcPath = path.join(__dirname, 'src');
+// var buildPath = path.join(__dirname, 'public', 'build');
+// var serverPath = path.join(__dirname, 'server');
+// var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+// var mainPath = path.resolve(__dirname, 'src', 'index.jsx');
 
-//webpack requires absolute paths
-var SRC_PATH = path.join(__dirname, 'src');
+// module.exports = {
+//   devtool: 'eval',
+//   entry: [
+//     // For hot style updates
+//     'webpack/hot/dev-server',
+//     // The script refreshing the browser on none hot updates
+//     'webpack-dev-server/client?http://localhost:8000',
+//     // Our application
+//     mainPath
+//   ],
+//   // to enable requiring files without specifying the extension
+//   // you must add a resolve.extensions parameter specifying files webpack
+//   // searches for; can use require('file') instead of require('file.jsx')
+//   resolve: {
+//     extensions: ['', '.js', '.jsx']
+//   },
+//   output: {
+//     // We need to give Webpack a path. It does not actually need it,
+//     // because files are kept in memory in webpack-dev-server, but an
+//     // error will occur if nothing is specified. We use the buildPath
+//     // as that points to where the files will eventually be bundled
+//     // in production
+//     path: buildPath,
+//     filename: 'bundle.js', // template name based on keys in entry
+//     publicPath: '/build/'
+//   },
 
-var common = {
-  context: SRC_PATH,
-  entry: path.join(SRC_PATH, 'index.jsx'),
-  // to enable requiring files without specifying the extension
-  // you must add a resolve.extensions parameter specifying files webpack
-  // searches for; can use require('file') instead of require('file.jsx')
-  resolve: {
-    root: SRC_PATH,
-    extensions: ['', '.js', '.jsx']
-  },
-  output: {
-    // If in production mode we put the files into the dist folder instead
-    path: process.env.NODE_ENV === 'production' ? './dist' : './build',
-    filename: '[name].js', // template name based on keys in entry
-    pathInfo: true,
-    publicPath: './build'
-  },
-
-
-  module: {
-    loaders: [ // webpack's equivalent of browserify transforms and RequireJS plugins is a loader
-      {
-        test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel'],
-        include: [path.join(SRC_PATH, 'index.jsx'), path.join(SRC_PATH, 'app')],
-        exclude: (/node_modules/|/lib/)
-      },
-      {
-        test: /\.js$/,
-        loader: "eslint-loader",
-        exclude: (/node_modules/|/lib/)
-      },
-      {
-        test: /\.css$/,
-        loader: 'style!css',
-        include: path.join(SRC_PATH, 'css')
-      },
-      {
-        test: /\.(png|jpg)$/,
-        loader: "url-loader?limit=8192" // inline base64 URLs for <=8k images, direct URLs for the rest
-      },
-      {
-        test: /\.jpg$/,
-        loader: "file-loader"
-      }
-    ]
-  }
-};
-
-if (TARGET === 'start' || !TARGET) {
-  // webpack dev server automatically refreshes content inthe browser
-  module.exports = merge(common, {
-    eslint: {
-      configFile: '.eslintrc'
-    },
-    devtool: 'eval',
-    devServer: {
-      colors: true,
-      historyApiFallback: {
-        index: './src/index.html'
-      },
-      hot: true,
-      inline: true,
-      progress: true,
-      debug: true,
-      port: 3000
-    },
-    plugins: [
-      new webpack.optimize.CommonsChunkPlugin('common.js'),
-      new HtmlWebpackPlugin({
-        inject: true, // injects script tag for js at end of body
-        template: 'src/index.html'
-      }),
-      new webpack.NoErrorsPlugin(), // if you want to see ESLint warnings in
-      // console during development using WebpackDevServer,
-      // remove NoErrorsPlugin from webpack config
-      new webpack.HotModuleReplacementPlugin()
-    ]
-  });
-}
+//   module: {
+//     loaders: [ // webpack's equivalent of browserify transforms and RequireJS plugins is a loader
+//       {
+//         test: /\.jsx$/,
+//         loader: 'react-hot!babel?stage=2',
+//         include: [mainPath, path.join(srcPath, 'app')],
+//         exclude: [nodeModulesPath, /lib/]
+//       },
+//       {
+//         test: /\.js$/,
+//         loader: 'babel?stage=2',
+//         include: path.join(__dirname, 'src')
+//       },
+//       {
+//         test: /\.jsx?$/,
+//         loader: "eslint-loader",
+//         exclude: [nodeModulesPath, /lib/]
+//       },
+//       {
+//         test: /\.css$/,
+//         loader: 'style!css',
+//         include: path.join(srcPath, 'css')
+//       },
+//       {
+//         test: /\.(png|jpg)$/,
+//         loader: "url-loader?limit=8192" // inline base64 URLs for <=8k images, direct URLs for the rest
+//       },
+//       {
+//         test: /\.jpg$/,
+//         loader: "file-loader"
+//       }
+//     ]
+//   },
+//   // We have to manually add the Hot Replacement plugin when running from Node
+//   plugins: [
+//     new webpack.HotModuleReplacementPlugin(),
+//     new webpack.NoErrorsPlugin()
+//   ]
+// };
