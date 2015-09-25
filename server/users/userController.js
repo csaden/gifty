@@ -24,6 +24,7 @@ module.exports = {
               mutual_friends : req.body.user.mutual_friends,
               giftsList: []
             });
+          if(req.body.user.mutual_friends) {
             req.body.user.mutual_friends.forEach(function(friend){
               var newGift = new Gift({
                 fbId: friend.id,
@@ -37,6 +38,7 @@ module.exports = {
               });
               newUser.giftsList.push(newGift);
             });
+          }
 
           newUser.save(function(err, user) {
             if (err) {
